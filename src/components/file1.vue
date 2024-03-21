@@ -74,8 +74,6 @@ watchEffect(() => {
         username = ref(response.data.data.username);
         blogTime = ref(response.data.data.createTime);
         blogTittle = ref(response.data.data.articleTitle);
-        // console.log(text.value);
-        // this.$router.push({path: '/'});
     })
         .catch(error => {
             console.error('登录失败:', error);
