@@ -5,10 +5,10 @@
             <Navigation />
             <div class="love-container">
                 <div class="love-word">
-                    <span>和 X X 在 一 起 已 经</span>
+                    <span>和 {{ lover }} 同学 在 一 起 已 经</span>
                 </div>
                 <div class="love-time">
-                    <span>0 天 了 !</span>
+                    <span>{{ loveDays }} 天 了 !</span>
                 </div>
                 <div class="toLoveWall">
                     <div class="toLoveWall-Card">
@@ -62,7 +62,10 @@ export default {
         Navigation
     },
     data() {
-        return {}
+        return {
+            lover: "",
+            loveDays:Number
+        }
     },
 
     computed: {},
@@ -74,7 +77,22 @@ export default {
     },
 
     mounted() {
-
+        //lover
+        this.lover = "x x"
+        //Timer
+        // 获取当前时间
+        const currentTime = new Date();
+        // console.log("currentTime",currentTime);
+        // 获取固定时间，假设为2022年1月1日 00:00:00
+        const fixedTime = new Date('2024-1-1 0:0:0');
+        // console.log("fixedTime",fixedTime);
+        // 计算差值（以毫秒为单位）
+        const timeDifference = currentTime.getTime() - fixedTime.getTime();
+        
+        // 3.1 计算相差的天数 
+        var days = parseInt(timeDifference / (1000 * 60 * 60 * 24));
+        console.log("days",days);
+        this.loveDays = days+1;
     },
 
     methods: {}
@@ -122,7 +140,7 @@ export default {
     width: 300px;
     height: 100px;
     margin-top: 50px;
-    background-color: rgb(255, 255, 255,0.9);
+    background-color: rgb(255, 255, 255, 0.9);
     border-radius: 25px;
     // background-image: url('../assets/source/loveCard.png');
     display: flex;
@@ -152,7 +170,7 @@ export default {
 .love-card {
     height: 140px;
     width: 320px;
-    background-color: rgb(255, 255, 255,0.9);
+    background-color: rgb(255, 255, 255, 0.9);
 
     border-radius: 25px;
     // background-image: url('../assets/source/loveCard.png');
@@ -172,6 +190,7 @@ export default {
     background-image: url('../assets/source/love-card1.png');
     background-size: cover;
 }
+
 .love-card-img2 {
     height: 100px;
     width: 100px;
@@ -179,7 +198,9 @@ export default {
     // background-color: aqua;
     background-image: url('../assets/source/love-card2.png');
     background-size: cover;
-}.love-card-img3 {
+}
+
+.love-card-img3 {
     height: 100px;
     width: 100px;
     border-radius: 50px;

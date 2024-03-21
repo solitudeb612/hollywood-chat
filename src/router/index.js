@@ -8,6 +8,7 @@ import IntroduceVue from '../components/introduce.vue'
 import AlbumVue from '../components/Album.vue'
 import BlogVue from '../components/blog.vue'
 import BlogDetailVue from '../components/admin/markdown.vue'
+import loginVue from '../components/login.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -49,20 +50,23 @@ const router = createRouter({
       path: '/blog',
       name: 'blog',
       component: BlogVue,
-      children: [
-        {
-          path: '/markdown',
-          name: 'markdown',
-          component:BlogDetailVue,
-        }
-      ],
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: loginVue
     },
     {
       path: '/file1',
       name: 'file1',
       component: file1
     },
-
+    {
+      path: '/markdown',
+      name: 'markdown',
+      component: BlogDetailVue,
+    }
+    ,
   ]
 })
 

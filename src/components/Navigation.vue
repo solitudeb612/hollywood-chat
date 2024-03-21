@@ -10,10 +10,6 @@
                 <span v-on:click="ClickBlog">博客</span>
             </li>
             <li>
-                💋
-                <span v-on:click="clickLoveSpace">情侣空间</span>
-            </li>
-            <li>
                 🌏
                 <span v-on:click="ClickAlbum">旅行日记</span>
             </li>
@@ -33,16 +29,16 @@
                 <span v-on:click="ClickTreeHole">留言板 </span>
             </li>
             <li>
-                <el-dropdown style="border-width: 0;">
-                    <span class="enter">
-                        登录
-                        <!-- <el-icon class="el-icon--right">
-                            <arrow-down />
-                        </el-icon> -->
-                    </span>
+                <el-dropdown style="">
+                    <el-button style="background-color: transparent;border-width: 0;color: rgb(255, 255, 255);font-family: 'navbarFont', sans-serif;font-size: 18px;
+                    ">
+                        个人中心
+                        <!-- <el-icon class="el-icon--right"><arrow-down /></el-icon> -->
+                    </el-button>
                     <template #dropdown style="border-width: 0;">
                         <el-dropdown-menu>
-                            <el-dropdown-item>登录账号</el-dropdown-item>
+                            <el-dropdown-item v-on:click="ClickPersonInfo">登录账号</el-dropdown-item>
+                            <el-dropdown-item>个人信息</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -101,6 +97,9 @@ export default {
         ClickBlog() {
             this.$router.push('/blog');
         },
+        ClickPersonInfo() {
+            this.$router.push('/login');
+        },
         handleClick() {
             // eslint-disable-next-line no-alert
             alert('button click')
@@ -123,7 +122,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     list-style: none;
-    z-index: 1;
+    z-index: 4;
     position: absolute;
     top: 0;
     right: 0;
@@ -131,6 +130,7 @@ export default {
     /* 设置初始背景颜色为透明 */
     transition: background-color 0.5s ease;
     /* 使用过渡属性设置过渡效果 */
+
 }
 
 .navbar:hover {
@@ -164,7 +164,8 @@ export default {
 span {
     margin-left: 4px;
 }
-.enter{
+
+.enter {
     font-size: 18px;
     height: 40px;
     line-height: 60px;
@@ -177,6 +178,7 @@ span {
     align-items: center;
     border-width: 0;
 }
+
 .enter:hover {
     background-color: rgb(228, 236, 236);
     color: rgb(224, 180, 57);

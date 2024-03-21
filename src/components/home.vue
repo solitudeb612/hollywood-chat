@@ -11,13 +11,14 @@
             <div class="page-container">
                 <div class="aside-container">
                     <div class="headPortrait">
-                        <div class="Portrait">
+                        <!-- <div class="Portrait">
                             暂无头像
-                        </div>
+                        </div> -->
+                        <el-avatar class="Portrait"> user </el-avatar>
                         <div class="UserDetial">
                             <div class="UserDetial_1">
                                 <span>文章</span>
-                                <span class="UserDetial_num">0</span>
+                                <span class="UserDetial_num">{{ blogNum }}</span>
                             </div>
                             <div class="UserDetial_1">
                                 <span>分类</span>
@@ -37,28 +38,49 @@
                     <div class="classifyContainer">
                         <img src="./../assets/source/svg/sort.svg" alt="SVG Image" class="sort-icon">
                         <div class="sortDIV">分 类</div>
+                        <div></div>
                     </div>
                 </div>
                 <div class="postNews">
                     <div class="message">
                         <img src="./../assets/source/svg/message.svg" alt="SVG Image" class="MSG-icon">
+                        <span class="MSG-text">这些就是我的博客文章，欢迎大家来评论，共同进步！</span>
+                    </div>
+                    <div class="postNewsContainter" ref="postContainerRef">
+                        <postNewsDetail :time="this.blogframe.time" :tittle="this.blogframe.tittle" :heat="1"
+                            :commentNum="1" :likeNum="1" :introText="this.blogframe.introText" v-on:click="pushBlogPage"/>
+                        <postNewsDetail />
+                        <postNewsDetail />
+                        <postNewsDetail />
+                        <postNewsDetail />
+                        <postNewsDetail />
+                        <postNewsDetail />
+
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 
 <script>
 import Navigation from "./Navigation.vue"
+import postNewsDetail from './admin/postNewsDetail.vue'
 export default {
     components: {
-        Navigation
+        Navigation,
+        postNewsDetail
     },
     data() {
         return {
+            blogframe: {
+                time: new Date().toLocaleString(),
+                tittle: "这是第一个博客---纪念一下",
+                introText: "这就是用于测试的博客内容，第一个博客页面，欢迎大家来评论，共同进步！"
+            },
+            blogNum: 0,
+            id: 1
 
         }
     },
@@ -77,10 +99,31 @@ export default {
         }, 1000); // 每隔5秒执行一次
         // 清除定时器
         // clearInterval(timer);
+
+        // 获取 postNewsDetail 组件容器的引用
+        const postContainer = this.$refs.postContainerRef;
+        // 计算 postNewsDetail 组件的数量
+        if (postContainer && postContainer.children) {
+            this.blogNum = postContainer.children.length;
+        }
+    },
+    computed: {
+
+    },
+    methods: {
+        pushBlogPage() {
+            this.$router.push({
+                name: 'file1/id',
+                params: {
+                    id: this.id
+                }
+            });
+        }
+
     }
+
 }
 </script>
-
 <style lang="scss" scoped>
 @font-face {
     font-family: 'navbarFont';
@@ -90,7 +133,6 @@ export default {
 
 .page {
     margin: -10px 0px 0px 0px;
-    // margin-top: 0px;
     top: 0px;
     background: url("../assets/source/bcg2.png") no-repeat;
     background-size: 100% 100%;
@@ -107,7 +149,6 @@ export default {
     font-size: 40px;
     color: #ffffff;
     font-family: 'BCGFont', sans-serif;
-
 }
 
 .wrapWord {
@@ -140,7 +181,6 @@ export default {
     bottom: 0;
     z-index: 2;
     animation: gradientBG 120s linear infinite;
-    // margin-bottom: 0px;
 }
 
 .contanier {
@@ -149,25 +189,25 @@ export default {
     background-color: rgb(255, 255, 255);
 }
 
-//buttom
 .page-container {
-    height: 60vh;
+    // height: 60vh;
     width: 80vw;
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
 }
 
 .aside-container {
-    height: 60vh;
+    // height: 60vh;
     width: 16vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    // margin-bottom: 10px;
-    // background-color: aqua;
+    // margin-top: 0px;
+    // margin-top: -370px;
+
 }
 
 .aside-container>div:not(:last-child) {
@@ -191,34 +231,24 @@ export default {
     flex-direction: column;
 }
 
-// .headPortrait{
-//     z-index: 10;
-// }
 .Portrait {
     height: 50%;
-    width: 50%;
-    border-radius: 50%;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-    background-color: rgb(163, 161, 161);
+    width: 48%;
 }
 
 .UserDetial {
     height: 7.5vh;
     width: 12vw;
-    // background-color: rgb(138, 171, 171);
     border-radius: 15px;
-    // box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     font-size: 14px;
-    // margin-top: 10px;
 }
 
 .UserDetial_1 {
-    // background-color:#28c2b7;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -243,7 +273,6 @@ export default {
     letter-spacing: 3px;
 }
 
-//背景颜色的动态改变 
 @keyframes zi {
     0% {
         background-position: 0% 50%;
@@ -269,7 +298,6 @@ export default {
 .searchContainer {
     height: 10vh;
     width: 16vw;
-    // background-color: #3498db;
     border-radius: 15px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -299,15 +327,11 @@ export default {
     font-size: 15px;
 }
 
-// ::placeholder {
-//     /* 将 placeholder 内容向右移动 20px */
-//     padding-left: 15px;
-// }
 
 .classifyContainer {
-    height: 10vh;
+
+    // height: 10vh;
     width: 16vw;
-    // background-color: #d35400;
     border-radius: 15px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -329,23 +353,30 @@ export default {
 }
 
 .postNews {
-    height: 60vh;
-    width: 54vw;
-    // background-color: black;
+    // height: 60vh;
+    height: auto;
+    margin-top: 10px;
+    margin-left: 40px;
+
 }
 
 .message {
     height: 10vh;
-    width: 54vw;
-    // background-color: #f39c12;
+    width: 58vw;
     border: 1px dashed #bcb6b6;
     margin-top: 10px;
+    // margin-left: 20px;
     border-radius: 20px 20px 20px 20px;
     display: flex;
-    // justify-content: center;
     align-items: center;
 }
+.MSG-text{
+    margin-left: 15px;
+    font-size: 20px;
+    font-family: 'navbarFont', sans-serif;
+    letter-spacing: 1px;
 
+}
 .MSG-icon {
     width: 50px;
     height: 50px;
@@ -355,6 +386,22 @@ export default {
     margin-left: 10px;
 
 }
+
+.postNewsContainter {
+    width: 60vw;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.postNewsContainter > * {
+    margin-right: 30px; /* 水平间隔 */
+    // margin-left: 10px;
+    // margin-bottom: 10px; /* 垂直间隔 */
+}
+
 
 @keyframes scaleAnimation {
     0% {
